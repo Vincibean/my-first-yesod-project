@@ -9,6 +9,7 @@ User
 
 Post
     title String
+    description Text
     url String
     author UserId
     score Int default=0
