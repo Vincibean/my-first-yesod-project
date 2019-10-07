@@ -15,3 +15,6 @@
 /greet2/#Text Greet2R GET
 /greet3 Greet3R GET
 /users UsersR GET POST
+/post/#PostId PostR GET
+/new PostNewR GET POST
+/post/#PostId/comments CommentsR POST

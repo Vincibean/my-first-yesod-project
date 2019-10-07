@@ -23,14 +23,19 @@ data FileForm = FileForm
 -- inclined, or create a single monolithic file.
 getHomeR :: Handler Html
 getHomeR = do
-    (formWidget, formEnctype) <- generateFormPost sampleForm
-    let submission = Nothing :: Maybe FileForm
-        handlerName = "getHomeR" :: Text
-
+    posts <- runDB $ selectList [] [Desc PostScore]
     defaultLayout $ do
-        aDomId <- newIdent
-        setTitle "Welcome To Yesod!"
-        $(widgetFile "homepage")
+        setTitle "Rumble"
+        $(widgetFile "home")
+
+generatePostWidget :: Entity Post -> Widget
+generatePostWidget (Entity postId post) = do
+    (author, comments) <- handlerToWidget $ runDB $ do
+                            comments <- selectList [CommentPost ==. postId]
+                                                    [Asc CommentCreated]
+                            author <- get404 $ postAuthor post
+                            return (author, comments)
+    $(widgetFile "post")
 
 postHomeR :: Handler Html
 postHomeR = do
