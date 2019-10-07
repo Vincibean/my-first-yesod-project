@@ -1,1 +1,4 @@
-<a href="javascript:#{onclick}()"><img src=@{AuthR loginIcon}></a>
+$if (Just (_, a) == muser)
+  <span>${ident a}</span>
+$else
+  <a href="javascript:#{onclick}()"><img src=@{AuthR loginIcon}></a>
